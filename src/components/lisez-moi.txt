@@ -1,0 +1,2 @@
+Ce dossier est pour les components que nous utiliserons dans notre app.
+Je vous prie de créer tous les components dans ce dossier

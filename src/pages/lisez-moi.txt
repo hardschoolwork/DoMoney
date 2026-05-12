@@ -1,0 +1,2 @@
+Ce dossier est celui des pages.
+Creer toutes les pages dans ce dossier

@@ -1,13 +1,96 @@
 @import "tailwindcss";
+@import "tailwindcss/preflight";
+@tailwind utilities;
 
 :root {
+  --dm-dark: #1A1A2E;
+  --dm-dark2: #16213E;
+  --dm-gold: #C9A84C;
+  --dm-gold-light: #E8C878;
+  --dm-bg: #FAFAF7;
+  --dm-bg2: #F5F0E8;
+  --dm-muted: #9999BB;
+  --dm-input: #F8F7F4;
+  --dm-border: #E0D9CC;
+  --dm-sub: #666688;
   --background: #ffffff;
   --foreground: #171717;
 }
 
 body {
-  background: var(--background);
-  color: white;
+  font-family: Georgia, 'Times New Roman', serif;
+  background: var(--dm-bg);
+  color: var(--dm-dark);
+}
 
-  font-family: Arial, Helvetica, sans-serif;
+/* Scrollbar custom */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #F5F0E8; }
+::-webkit-scrollbar-thumb { background: #C9A84C55; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #C9A84C; }
+
+/* Gold gradient text utility */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #C9A84C, #E8C878);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Input base style */
+.dm-input {
+  background: #F8F7F4;
+  border: 1.5px solid #E0D9CC;
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: #1A1A2E;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.dm-input:focus {
+  border-color: #C9A84C;
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.1);
+}
+.dm-input::placeholder { color: #BBB; }
+
+/* Button styles */
+.btn-primary {
+  background: linear-gradient(135deg, #1A1A2E, #16213E);
+  border: 1.5px solid #C9A84C;
+  border-radius: 12px;
+  color: #E8C878;
+  font-family: Georgia, serif;
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-size: 14px;
+  padding: 14px 24px;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s;
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #C9A84C, #E8C878);
+  color: #1A1A2E;
+  border-color: transparent;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid #C9A84C;
+  border-radius: 10px;
+  color: #C9A84C;
+  font-family: Georgia, serif;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 13px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-outline:hover {
+  background: #C9A84C;
+  color: #1A1A2E;
 }
