@@ -2,168 +2,141 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from "next/image";
 
 export default function LoginPage() {
     const [showPass, setShowPass] = useState(false)
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
 
     return (
-        <div className="min-h-screen flex" style={{ background: 'linear-gradient(135deg, #FAFAF7 0%, #F5F0E8 100%)' }}>
-            {/* Decorative circles */}
-            <div className="fixed top-[-50px] left-[-50px] w-64 h-64 rounded-full pointer-events-none" style={{ background: 'rgba(201,168,76,0.05)' }} />
-            <div className="fixed bottom-[-80px] right-[-80px] w-96 h-96 rounded-full pointer-events-none" style={{ background: 'rgba(26,26,46,0.04)' }} />
+        <div style={{ display: 'flex', minHeight: '100vh', background: 'linear-gradient(135deg, #FAFAF7, #F5F0E8)' }}>
 
-            {/* Left panel */}
-            <div
-                className="hidden lg:flex flex-col w-[580px] min-h-screen relative overflow-hidden"
-                style={{ background: 'linear-gradient(135deg, #1A1A2E 0%, #16213E 100%)' }}
-            >
-                {/* Gold accent line */}
-                <div
-                    className="absolute left-[60px] top-0 w-[3px] h-full opacity-30"
-                    style={{ background: 'linear-gradient(180deg, #C9A84C, #E8C878)' }}
-                />
-                {/* Decorative circles */}
-                <div className="absolute top-[-60px] right-[-60px] w-72 h-72 rounded-full" style={{ background: 'rgba(201,168,76,0.04)' }} />
-                <div className="absolute bottom-[-80px] left-[-80px] w-80 h-80 rounded-full" style={{ background: 'rgba(201,168,76,0.03)' }} />
+            {/* Panneau gauche sombre */}
+            <div style={{
+                width: '580px', minHeight: '100vh', flexShrink: 0,
+                background: 'linear-gradient(160deg, #1A1A2E 0%, #16213E 100%)',
+                display: 'flex', flexDirection: 'column',
+                position: 'relative', overflow: 'hidden',
+            }}>
+                {/* Ligne or */}
+                <div style={{ position: 'absolute', left: '60px', top: 0, width: '3px', height: '100%', background: 'linear-gradient(180deg,#C9A84C,#E8C878)', opacity: 0.3 }} />
+                {/* Cercle déco */}
+                <div style={{ position: 'absolute', top: '-60px', right: '-60px', width: '300px', height: '300px', borderRadius: '50%', background: 'rgba(201,168,76,0.04)' }} />
+                <div style={{ position: 'absolute', bottom: '-80px', left: '-60px', width: '320px', height: '320px', borderRadius: '50%', background: 'rgba(201,168,76,0.03)' }} />
 
                 {/* Logo */}
-                <div className="flex items-center gap-3 px-[70px] pt-10">
-                    <div
-                        className="w-14 h-14 rounded-full flex items-center justify-center font-bold text-[#1A1A2E] text-2xl"
-                        style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C878)' }}
-                    >
-                        D
-                    </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '40px 60px 0' }}>
+                    <Image
+                        src="/logo.png"
+                        alt="DoMoney"
+                        width={42}
+                        height={42}
+                        style={{ borderRadius: '50%', objectFit: 'cover' }}
+                    />
                     <div>
-                        <div className="font-bold text-[#E8C878] text-2xl" style={{ fontFamily: 'Georgia, serif' }}>DoMoney</div>
-                        <div className="text-[#C9A84C] text-[10px] tracking-[3px]">TCHOKO TRANSFER</div>
+                        <div style={{ fontWeight: 'bold', color: '#E8C878', fontSize: '22px', fontFamily: 'Georgia,serif' }}>DoMoney</div>
+                        <div style={{ color: '#C9A84C', fontSize: '9px', letterSpacing: '3px' }}>TCHOKO TRANSFER</div>
                     </div>
                 </div>
 
-                {/* Tagline */}
-                <div className="flex-1 flex flex-col items-center justify-center px-10 text-center">
-                    <h2 className="text-5xl font-bold text-white leading-tight mb-2" style={{ fontFamily: 'Georgia, serif' }}>
+                {/* Tagline centre */}
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0 60px', textAlign: 'center' }}>
+                    <h2 style={{ fontSize: '42px', fontWeight: 'bold', color: '#FFFFFF', fontFamily: 'Georgia,serif', lineHeight: 1.2, marginBottom: '8px' }}>
                         Ton Argent,
                     </h2>
-                    <h2
-                        className="text-5xl font-bold leading-tight mb-4"
-                        style={{ fontFamily: 'Georgia, serif', background: 'linear-gradient(135deg, #C9A84C, #E8C878)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
-                    >
+                    <h2 style={{
+                        fontSize: '42px', fontWeight: 'bold', fontFamily: 'Georgia,serif', lineHeight: 1.2, marginBottom: '16px',
+                        background: 'linear-gradient(135deg,#C9A84C,#E8C878)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+                    }}>
                         Partout au Monde
                     </h2>
-                    <p className="text-[#9999BB] text-sm tracking-wider">Transferts multi-devises en toute sécurité</p>
+                    <p style={{ color: '#9999BB', fontSize: '13px', letterSpacing: '1px', marginBottom: '48px' }}>
+                        Transferts multi-devises en toute sécurité
+                    </p>
 
                     {/* Stats */}
-                    <div className="mt-12 grid grid-cols-2 gap-4 w-full max-w-md">
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', width: '100%', maxWidth: '380px' }}>
                         {[
-                            { value: '150+', label: 'Devises supportées' },
-                            { value: '0.5%', label: 'Frais compétitifs' },
-                        ].map((s) => (
-                            <div
-                                key={s.label}
-                                className="rounded-xl p-5 text-center"
-                                style={{ background: 'rgba(255,255,255,0.05)', border: '0.5px solid rgba(201,168,76,0.3)' }}
-                            >
-                                <div className="text-2xl font-bold text-[#E8C878]" style={{ fontFamily: 'Georgia, serif' }}>{s.value}</div>
-                                <div className="text-[#9999BB] text-xs mt-1">{s.label}</div>
+                            { v: '150+', l: 'Devises supportées' },
+                            { v: '0.5%', l: 'Frais compétitifs' },
+                        ].map(s => (
+                            <div key={s.l} style={{
+                                borderRadius: '12px', padding: '20px', textAlign: 'center',
+                                background: 'rgba(255,255,255,0.05)', border: '0.5px solid rgba(201,168,76,0.25)',
+                            }}>
+                                <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#E8C878', fontFamily: 'Georgia,serif' }}>{s.v}</div>
+                                <div style={{ color: '#9999BB', fontSize: '11px', marginTop: '4px' }}>{s.l}</div>
                             </div>
                         ))}
-                        <div
-                            className="col-span-2 rounded-xl p-5 text-center"
-                            style={{ background: 'rgba(255,255,255,0.05)', border: '0.5px solid rgba(201,168,76,0.3)' }}
-                        >
-                            <div className="text-2xl font-bold text-[#E8C878]" style={{ fontFamily: 'Georgia, serif' }}>24/7</div>
-                            <div className="text-[#9999BB] text-xs mt-1">Transferts instantanés disponibles</div>
+                        <div style={{
+                            gridColumn: '1/-1', borderRadius: '12px', padding: '20px', textAlign: 'center',
+                            background: 'rgba(255,255,255,0.05)', border: '0.5px solid rgba(201,168,76,0.25)',
+                        }}>
+                            <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#E8C878', fontFamily: 'Georgia,serif' }}>24/7</div>
+                            <div style={{ color: '#9999BB', fontSize: '11px', marginTop: '4px' }}>Transferts instantanés disponibles</div>
                         </div>
                     </div>
                 </div>
 
-                <p className="text-center text-[#555577] text-xs tracking-[2px] pb-8">
+                <p style={{ textAlign: 'center', color: '#555577', fontSize: '10px', letterSpacing: '2px', padding: '24px' }}>
                     © 2025 DOMONEY · TOUS DROITS RÉSERVÉS
                 </p>
             </div>
 
-            {/* Right panel - Form */}
-            <div className="flex-1 flex items-center justify-center px-6 py-12">
-                <div
-                    className="w-full max-w-[500px] rounded-3xl p-10"
-                    style={{ background: '#fff', boxShadow: '0 8px 40px rgba(0,0,0,0.08)' }}
-                >
-                    <h2 className="text-3xl font-bold text-[#1A1A2E] mb-1" style={{ fontFamily: 'Georgia, serif' }}>
+            {/* Panneau droit — formulaire */}
+            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 60px' }}>
+                <div style={{
+                    width: '100%', maxWidth: '480px',
+                    background: '#FFFFFF', borderRadius: '20px',
+                    padding: '44px 44px',
+                    boxShadow: '0 8px 40px rgba(0,0,0,0.08)',
+                }}>
+                    <h2 style={{ fontSize: '28px', fontWeight: 'bold', color: '#1A1A2E', fontFamily: 'Georgia,serif', marginBottom: '6px' }}>
                         Bon Retour 👋
                     </h2>
-                    <p className="text-[#888] text-sm mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                    <p style={{ color: '#888', fontSize: '14px', marginBottom: '20px', fontFamily: 'Georgia,serif' }}>
                         Connecte-toi à ton compte DoMoney
                     </p>
-                    <div
-                        className="w-24 h-0.5 rounded mb-8"
-                        style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C878)' }}
-                    />
+                    <div className="gold-divider" />
 
                     {/* Email */}
-                    <div className="mb-5">
-                        <label className="block text-xs font-semibold text-[#666] tracking-wider mb-2 uppercase">
-                            Email / Téléphone
-                        </label>
-                        <div className="relative">
-                            <input
-                                type="text"
-                                placeholder="exemple@email.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="dm-input pr-12"
-                            />
-                            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[#C9A84C]">✉</span>
+                    <div style={{ marginBottom: '18px' }}>
+                        <label className="field-label">Email / Téléphone</label>
+                        <div style={{ position: 'relative' }}>
+                            <input type="text" placeholder="exemple@email.com" className="dm-input" style={{ paddingRight: '44px' }} />
+                            <span style={{ position: 'absolute', right: '14px', top: '50%', transform: 'translateY(-50%)', color: '#C9A84C' }}>✉</span>
                         </div>
                     </div>
 
-                    {/* Password */}
-                    <div className="mb-4">
-                        <label className="block text-xs font-semibold text-[#666] tracking-wider mb-2 uppercase">
-                            Mot de passe
-                        </label>
-                        <div className="relative">
-                            <input
-                                type={showPass ? 'text' : 'password'}
-                                placeholder="••••••••••••"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="dm-input pr-12"
-                            />
-                            <button
-                                onClick={() => setShowPass(!showPass)}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#C9A84C]"
-                            >
-                                👁
-                            </button>
+                    {/* Mot de passe */}
+                    <div style={{ marginBottom: '12px' }}>
+                        <label className="field-label">Mot de passe</label>
+                        <div style={{ position: 'relative' }}>
+                            <input type={showPass ? 'text' : 'password'} placeholder="••••••••••••" className="dm-input" style={{ paddingRight: '44px' }} />
+                            <button onClick={() => setShowPass(!showPass)} style={{ position: 'absolute', right: '14px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#C9A84C', fontSize: '16px' }}>👁</button>
                         </div>
                     </div>
 
-                    {/* Forgot */}
-                    <div className="text-right mb-6">
-                        <Link href="#" className="text-[#C9A84C] text-sm hover:underline" style={{ fontFamily: 'Georgia, serif' }}>
+                    {/* Oublié */}
+                    <div style={{ textAlign: 'right', marginBottom: '24px' }}>
+                        <Link href="#" style={{ color: '#C9A84C', fontSize: '13px', textDecoration: 'none', fontFamily: 'Georgia,serif' }}>
                             Mot de passe oublié ?
                         </Link>
                     </div>
 
-                    {/* Submit */}
-                    <button className="btn-primary mb-6">SE CONNECTER</button>
+                    <button className="btn-primary" style={{ marginBottom: '20px' }}>SE CONNECTER</button>
 
-                    {/* Divider */}
-                    <div className="flex items-center gap-4 mb-6">
-                        <div className="flex-1 h-px bg-[#E0D9CC]" />
-                        <span className="text-[#BBB] text-xs">ou</span>
-                        <div className="flex-1 h-px bg-[#E0D9CC]" />
+                    {/* Séparateur */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+                        <div style={{ flex: 1, height: '1px', background: '#E0D9CC' }} />
+                        <span style={{ color: '#BBB', fontSize: '12px' }}>ou</span>
+                        <div style={{ flex: 1, height: '1px', background: '#E0D9CC' }} />
                     </div>
 
-                    {/* Create account */}
-                    <p className="text-center text-[#666] text-sm mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+                    <p style={{ textAlign: 'center', color: '#666', fontSize: '14px', marginBottom: '14px', fontFamily: 'Georgia,serif' }}>
                         Pas encore de compte ?
                     </p>
                     <Link href="/auth/inscription">
-                        <button className="btn-outline w-full">CRÉER UN COMPTE</button>
+                        <button className="btn-outline" style={{ width: '100%' }}>CRÉER UN COMPTE</button>
                     </Link>
                 </div>
             </div>

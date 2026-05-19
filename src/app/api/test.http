@@ -1,0 +1,208 @@
+
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@domoney.cm",
+  "prenom": "Jean-Paul",
+  "nom": "Nguetsop",
+  "telephone": "+237600000001",
+  "pays": "Cameroun",
+  "password": "DoMoney2025!",
+  "pin": "1234"
+}
+
+###
+
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "jeanpaul@domoney.cm",
+    "password": "DoMoney2025!"
+}
+
+> {%
+    client.global.set("token", response.body.token);
+%}
+
+### 1. LOGIN
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "jeanpaul@domoney.cm",
+  "password": "DoMoney2025!"
+}
+
+> {%
+    client.global.set("token", response.body.token);
+%}
+
+###
+
+### 2. MON PROFIL
+GET http://localhost:3000/api/auth/me
+Authorization: Bearer {{token}}
+
+###
+
+### 3. LISTE BENEFICIAIRES
+GET http://localhost:3000/api/beneficiaries
+Authorization: Bearer {{token}}
+
+###
+
+### 4. RECHERCHE BENEFICIAIRE
+GET http://localhost:3000/api/beneficiaries?search=Marie
+Authorization: Bearer {{token}}
+
+###
+
+### 5. AJOUTER BENEFICIAIRE
+POST http://localhost:3000/api/beneficiaries
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "prenom": "Sophie",
+  "nom": "Martin",
+  "email": "sophie@email.fr",
+  "pays": "Lyon, France",
+  "flag": "🇫🇷",
+  "currency": "EUR",
+  "color": "#E91E63"
+}
+
+###
+
+### 6. MODIFIER BENEFICIAIRE
+PUT http://localhost:3000/api/beneficiaries/ID_ICI
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "prenom": "Sophie",
+  "nom": "Martin-Dupont",
+  "email": "sophie@email.fr",
+  "pays": "Lyon, France",
+  "flag": "🇫🇷",
+  "currency": "EUR",
+  "color": "#E91E63"
+}
+
+###
+
+### 7. SUPPRIMER BENEFICIAIRE
+DELETE http://localhost:3000/api/beneficiaries/ID_ICI
+Authorization: Bearer {{token}}
+
+###
+
+### 8. FAIRE UN TRANSFERT
+POST http://localhost:3000/api/transactions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "beneficiaireId": "ID_DU_BENEFICIAIRE",
+  "amountSent": 50000,
+  "currencyFrom": "XAF",
+  "currencyTo": "EUR",
+  "motif": "Transfert famille",
+  "message": "Pour toi maman",
+  "pin": "1234"
+}
+
+###
+
+### 9. HISTORIQUE TRANSACTIONS
+GET http://localhost:3000/api/transactions
+Authorization: Bearer {{token}}
+
+###
+
+### 10. TRANSACTIONS FILTREES
+GET http://localhost:3000/api/transactions?status=completed
+Authorization: Bearer {{token}}
+
+###
+
+### 11. TRANSACTIONS PAGINEES
+GET http://localhost:3000/api/transactions?type=envoi&page=1&limit=10
+Authorization: Bearer {{token}}
+
+###
+
+### 12. DETAIL TRANSACTION
+GET http://localhost:3000/api/transactions/ID_ICI
+Authorization: Bearer {{token}}
+
+###
+
+### 13. ANNULER TRANSACTION
+PUT http://localhost:3000/api/transactions/ID_ICI
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "status": "cancelled"
+}
+
+###
+
+### 14. TAUX DE CHANGE
+GET http://localhost:3000/api/rate
+
+###
+
+### 15. TAUX DE CHANGE FILTRE
+GET http://localhost:3000/api/rate?from=XAF
+
+###
+
+### 16. CONVERTISSEUR
+POST http://localhost:3000/api/rate/convert
+Content-Type: application/json
+
+{
+  "from": "XAF",
+  "to": "EUR",
+  "amount": 50000
+}
+
+###
+
+### 17. MODIFIER PROFIL
+PUT http://localhost:3000/api/users/profile
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "prenom": "Jean-Paul",
+  "nom": "Nguetsop",
+  "telephone": "+237600000000",
+  "pays": "Cameroun"
+}
+
+###
+
+### 18. CHANGER MOT DE PASSE
+PUT http://localhost:3000/api/users/password
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "currentPassword": "DoMoney2025!",
+  "newPassword": "NouveauMDP2025!"
+}
+
+###
+
+### 19. LOGOUT
+POST http://localhost:3000/api/auth/logout
+Authorization: Bearer {{token}}
+
+> {%
+    client.global.clear("token");
+%}

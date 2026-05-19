@@ -2,154 +2,129 @@ import Topbar from '../../components/topbar'
 import { MOCK_BENEFICIAIRES, MOCK_TRANSACTIONS } from '@/lib/constants'
 
 const stats = [
-    { label: 'Solde principal', value: '892 500', currency: 'XAF', sub: '≈ 1,361.32 EUR', icon: '💳', trend: '+12.4%', trendUp: true, color: 'gold' },
-    { label: 'Envoyé ce mois', value: '125 000', currency: 'XAF', sub: '5 transactions', icon: '📤', trend: '+8.2%', trendUp: true, color: 'blue' },
-    { label: 'Reçu ce mois', value: '48 500', currency: 'XAF', sub: '2 transactions', icon: '📥', trend: '-3.1%', trendUp: false, color: 'green' },
-    { label: 'Frais payés', value: '856', currency: 'XAF', sub: '0.5% moy.', icon: '💰', trend: '+0.5%', trendUp: true, color: 'purple' },
+    { label: 'Solde principal', value: '892 500', currency: 'XAF', sub: '≈ 1 361.32 EUR', icon: '💳', trend: '+12.4%', up: true },
+    { label: 'Envoyé ce mois',  value: '125 000', currency: 'XAF', sub: '5 transactions',  icon: '📤', trend: '+8.2%',  up: true },
+    { label: 'Reçu ce mois',    value: '48 500',  currency: 'XAF', sub: '2 transactions',  icon: '📥', trend: '-3.1%',  up: false },
+    { label: 'Frais payés',     value: '856',     currency: 'XAF', sub: '0.5% moy.',       icon: '💰', trend: '+0.5%',  up: true },
 ]
 
 export default function DashboardPage() {
     return (
         <>
-            <Topbar breadcrumb="TABLEAU DE BORD" title="Bonjour, Jean-Paul 👋" />
-            <div className="p-8">
-                {/* Stats */}
-                <div className="grid grid-cols-4 gap-5 mb-8">
-                    {stats.map((s) => (
-                        <div
-                            key={s.label}
-                            className="rounded-2xl p-6"
-                            style={{ background: '#fff', boxShadow: '0 2px 16px rgba(0,0,0,0.05)', border: '1px solid #F0EDE5' }}
-                        >
-                            <div className="flex items-start justify-between mb-4">
-                                <div className="text-3xl">{s.icon}</div>
-                                <span
-                                    className="text-xs font-semibold px-2 py-1 rounded-full"
-                                    style={
-                                        s.trendUp
-                                            ? { background: 'rgba(76,175,80,0.1)', color: '#4CAF50' }
-                                            : { background: 'rgba(229,57,53,0.1)', color: '#E53935' }
-                                    }
-                                >
-                  {s.trend}
-                </span>
+
+            <div style={{ padding: '28px 32px' }}>
+
+                {/* Stats row */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '20px', marginBottom: '24px' }}>
+                    {stats.map(s => (
+                        <div key={s.label} className="dm-card">
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
+                                <span style={{ fontSize: '28px' }}>{s.icon}</span>
+                                <span style={{
+                                    fontSize: '11px', fontWeight: 600, padding: '3px 10px', borderRadius: '20px',
+                                    background: s.up ? 'rgba(76,175,80,0.1)' : 'rgba(229,57,53,0.1)',
+                                    color: s.up ? '#2E7D32' : '#C62828',
+                                }}>{s.trend}</span>
                             </div>
-                            <p className="text-[#888] text-xs tracking-wider uppercase mb-1">{s.label}</p>
-                            <p className="text-2xl font-bold text-[#1A1A2E]" style={{ fontFamily: 'Georgia, serif' }}>
-                                {s.value} <span className="text-sm text-[#9999BB]">{s.currency}</span>
+                            <p style={{ fontSize: '10px', color: '#999', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '4px' }}>{s.label}</p>
+                            <p style={{ fontSize: '22px', fontWeight: 'bold', color: '#1A1A2E', fontFamily: 'Georgia,serif' }}>
+                                {s.value} <span style={{ fontSize: '12px', color: '#9999BB' }}>{s.currency}</span>
                             </p>
-                            <p className="text-xs text-[#888] mt-1">{s.sub}</p>
+                            <p style={{ fontSize: '11px', color: '#888', marginTop: '4px' }}>{s.sub}</p>
                         </div>
                     ))}
                 </div>
 
-                <div className="grid grid-cols-3 gap-6">
-                    {/* Quick actions */}
-                    <div className="rounded-2xl p-6 col-span-1" style={{ background: '#fff', boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}>
-                        <h3 className="text-base font-bold text-[#1A1A2E] mb-1" style={{ fontFamily: 'Georgia, serif' }}>Actions rapides</h3>
-                        <div className="w-10 h-0.5 rounded mb-5" style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C878)' }} />
-                        <div className="space-y-3">
-                            {[
-                                { icon: '💸', label: 'Envoyer', sub: 'Vers un bénéficiaire', href: '/transfert' },
-                                { icon: '📋', label: 'Historique', sub: 'Voir les transactions', href: '/historique' },
-                                { icon: '👥', label: 'Bénéficiaires', sub: 'Gérer les contacts', href: '/beneficiaires' },
-                                { icon: '📊', label: 'Taux de change', sub: 'Consulter en direct', href: '/taux-change' },
-                            ].map((a) => (
-                                <a
-                                    key={a.label}
-                                    href={a.href}
-                                    className="flex items-center gap-3 p-3 rounded-xl hover:bg-[#F8F7F4] transition-colors group"
-                                >
-                                    <div
-                                        className="w-10 h-10 rounded-xl flex items-center justify-center text-lg shrink-0"
-                                        style={{ background: 'linear-gradient(135deg, rgba(201,168,76,0.12), rgba(232,200,120,0.08))' }}
-                                    >
-                                        {a.icon}
-                                    </div>
-                                    <div>
-                                        <p className="text-[#1A1A2E] font-medium text-sm">{a.label}</p>
-                                        <p className="text-[#888] text-xs">{a.sub}</p>
-                                    </div>
-                                    <span className="ml-auto text-[#C9A84C] opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                                </a>
-                            ))}
-                        </div>
+                {/* Ligne 2 : actions rapides + transactions */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '20px', marginBottom: '20px' }}>
+
+                    {/* Actions rapides */}
+                    <div className="dm-card">
+                        <h3 style={{ fontWeight: 'bold', fontSize: '15px', color: '#1A1A2E', fontFamily: 'Georgia,serif', marginBottom: '4px' }}>Actions rapides</h3>
+                        <div className="gold-divider" />
+                        {[
+                            { icon: '💸', label: 'Envoyer', sub: 'Vers un bénéficiaire', href: '/dashboard/transfert' },
+                            { icon: '📋', label: 'Historique', sub: 'Voir les transactions', href: '/dashboard/historique' },
+                            { icon: '👥', label: 'Bénéficiaires', sub: 'Gérer les contacts', href: '/dashboard/beneficiaires' },
+                            { icon: '📊', label: 'Taux de change', sub: 'Consulter en direct', href: '/dashboard/taux-change' },
+                        ].map(a => (
+                            <a key={a.label} href={a.href} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px', borderRadius: '10px', textDecoration: 'none', marginBottom: '4px' }}>
+                                <div style={{
+                                    width: '40px', height: '40px', borderRadius: '10px', flexShrink: 0,
+                                    background: 'rgba(201,168,76,0.1)',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px',
+                                }}>{a.icon}</div>
+                                <div>
+                                    <p style={{ fontSize: '13px', fontWeight: 500, color: '#1A1A2E' }}>{a.label}</p>
+                                    <p style={{ fontSize: '11px', color: '#888' }}>{a.sub}</p>
+                                </div>
+                            </a>
+                        ))}
                     </div>
 
-                    {/* Recent transactions */}
-                    <div className="col-span-2 rounded-2xl p-6" style={{ background: '#fff', boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}>
-                        <div className="flex items-center justify-between mb-1">
-                            <h3 className="text-base font-bold text-[#1A1A2E]" style={{ fontFamily: 'Georgia, serif' }}>Transactions récentes</h3>
-                            <a href="/historique" className="text-[#C9A84C] text-sm hover:underline">Voir tout →</a>
+                    {/* Transactions récentes */}
+                    <div className="dm-card">
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                            <h3 style={{ fontWeight: 'bold', fontSize: '15px', color: '#1A1A2E', fontFamily: 'Georgia,serif' }}>Transactions récentes</h3>
+                            <a href="/dashboard/historique" style={{ color: '#C9A84C', fontSize: '13px', textDecoration: 'none' }}>Voir tout →</a>
                         </div>
-                        <div className="w-10 h-0.5 rounded mb-5" style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C878)' }} />
-                        <div className="space-y-3">
-                            {MOCK_TRANSACTIONS.slice(0, 4).map((tx) => (
-                                <div key={tx.id} className="flex items-center gap-4 p-3 rounded-xl hover:bg-[#F8F7F4] transition-colors">
-                                    <div
-                                        className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shrink-0"
-                                        style={{ background: `${tx.color}22`, color: tx.color }}
-                                    >
-                                        {tx.initials}
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <p className="font-medium text-sm text-[#1A1A2E]">{tx.recipient}</p>
-                                        <p className="text-xs text-[#888]">{tx.country} · {tx.date}</p>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="font-bold text-sm" style={{ color: tx.type === 'envoi' ? '#E53935' : '#4CAF50' }}>
-                                            {tx.type === 'envoi' ? '-' : '+'}{tx.amountSent}
-                                        </p>
-                                        <span
-                                            className="text-xs px-2 py-0.5 rounded-full"
-                                            style={
-                                                tx.status === 'completed' ? { background: 'rgba(76,175,80,0.1)', color: '#4CAF50' }
-                                                    : tx.status === 'pending' ? { background: 'rgba(255,152,0,0.1)', color: '#FF9800' }
-                                                        : { background: 'rgba(229,57,53,0.1)', color: '#E53935' }
-                                            }
-                                        >
-                      {tx.status === 'completed' ? '✓ Complété' : tx.status === 'pending' ? '⏳ En attente' : '✕ Annulé'}
-                    </span>
-                                    </div>
+                        <div className="gold-divider" />
+                        {MOCK_TRANSACTIONS.slice(0, 4).map(tx => (
+                            <div key={tx.id} style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '10px', borderRadius: '10px', marginBottom: '4px' }}>
+                                <div style={{
+                                    width: '40px', height: '40px', borderRadius: '50%', flexShrink: 0,
+                                    background: tx.color + '22', color: tx.color,
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    fontSize: '13px', fontWeight: 'bold',
+                                }}>{tx.initials}</div>
+                                <div style={{ flex: 1, minWidth: 0 }}>
+                                    <p style={{ fontSize: '13px', fontWeight: 500, color: '#1A1A2E' }}>{tx.recipient}</p>
+                                    <p style={{ fontSize: '11px', color: '#888' }}>{tx.country} · {tx.date}</p>
                                 </div>
-                            ))}
-                        </div>
+                                <div style={{ textAlign: 'right' }}>
+                                    <p style={{ fontWeight: 'bold', fontSize: '13px', color: tx.type === 'envoi' ? '#C62828' : '#2E7D32' }}>
+                                        {tx.type === 'envoi' ? '-' : '+'}{tx.amountSent}
+                                    </p>
+                                    <span className={tx.status === 'completed' ? 'badge-completed' : tx.status === 'pending' ? 'badge-pending' : 'badge-cancelled'}>
+                    {tx.status === 'completed' ? '✓ Complété' : tx.status === 'pending' ? '⏳ En attente' : '✕ Annulé'}
+                  </span>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
 
-                {/* Beneficiaries quick bar */}
-                <div className="mt-6 rounded-2xl p-6" style={{ background: '#fff', boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}>
-                    <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-base font-bold text-[#1A1A2E]" style={{ fontFamily: 'Georgia, serif' }}>Bénéficiaires fréquents</h3>
-                        <a href="/beneficiaires" className="text-[#C9A84C] text-sm hover:underline">Gérer →</a>
+                {/* Bénéficiaires fréquents */}
+                <div className="dm-card">
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                        <h3 style={{ fontWeight: 'bold', fontSize: '15px', color: '#1A1A2E', fontFamily: 'Georgia,serif' }}>Bénéficiaires fréquents</h3>
+                        <a href="/dashboard/beneficiaires" style={{ color: '#C9A84C', fontSize: '13px', textDecoration: 'none' }}>Gérer →</a>
                     </div>
-                    <div className="flex gap-4 overflow-x-auto pb-2">
-                        {MOCK_BENEFICIAIRES.slice(0, 5).map((b) => (
-                            <div
-                                key={b.name}
-                                className="flex flex-col items-center gap-2 min-w-20 p-3 rounded-xl cursor-pointer hover:bg-[#F8F7F4] transition-colors"
-                            >
-                                <div
-                                    className="w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold"
-                                    style={{ background: `${b.color}22`, color: b.color }}
-                                >
-                                    {b.initials}
-                                </div>
-                                <p className="text-xs text-[#1A1A2E] font-medium text-center whitespace-nowrap">{b.name.split(' ')[0]}</p>
-                                <p className="text-xs text-[#888]">{b.flag}</p>
+                    <div className="gold-divider" />
+                    <div style={{ display: 'flex', gap: '20px', overflowX: 'auto', paddingBottom: '4px' }}>
+                        {MOCK_BENEFICIAIRES.slice(0, 5).map(b => (
+                            <div key={b.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', minWidth: '70px', cursor: 'pointer' }}>
+                                <div style={{
+                                    width: '48px', height: '48px', borderRadius: '50%',
+                                    background: b.color + '22', color: b.color,
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    fontSize: '13px', fontWeight: 'bold',
+                                }}>{b.initials}</div>
+                                <p style={{ fontSize: '11px', color: '#1A1A2E', fontWeight: 500, textAlign: 'center' }}>{b.name.split(' ')[0]}</p>
+                                <p style={{ fontSize: '11px', color: '#888' }}>{b.flag}</p>
                             </div>
                         ))}
-                        <a
-                            href="/beneficiaires"
-                            className="flex flex-col items-center gap-2 min-w-20 p-3 rounded-xl hover:bg-[#F8F7F4] transition-colors"
-                        >
-                            <div className="w-12 h-12 rounded-full flex items-center justify-center text-2xl font-light text-[#C9A84C]" style={{ border: '2px dashed #C9A84C' }}>
-                                +
-                            </div>
-                            <p className="text-xs text-[#C9A84C] font-medium">Ajouter</p>
+                        <a href="/dashboard/beneficiaires" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', minWidth: '70px', textDecoration: 'none' }}>
+                            <div style={{
+                                width: '48px', height: '48px', borderRadius: '50%',
+                                border: '2px dashed #C9A84C', color: '#C9A84C',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px',
+                            }}>+</div>
+                            <p style={{ fontSize: '11px', color: '#C9A84C', fontWeight: 500 }}>Ajouter</p>
                         </a>
                     </div>
                 </div>
+
             </div>
         </>
     )

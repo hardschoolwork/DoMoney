@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  telephone   String?  @unique
+  prenom      String
+  nom         String
+  username    String   @unique
+  password    String
+  pin         String
+  pays        String   @default("Cameroun")
+  balance     Float    @default(0)
+  currency    String   @default("XAF")
+  isVerified  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  beneficiaires  Beneficiaire[]
+  transactions   Transaction[]  @relation("SenderTransactions")
+  receptions     Transaction[]  @relation("ReceiverTransactions")
+  sessions       Session[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Beneficiaire {
+  id        String   @id @default(cuid())
+  userId    String
+  prenom    String
+  nom       String
+  email     String?
+  telephone String?
+  pays      String
+  flag      String
+  currency  String
+  account   String   @unique
+  color     String   @default("#C9A84C")
+  lastSent  DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+}
+
+model Transaction {
+  id              String   @id @default(cuid())
+  senderId        String
+  receiverId      String?
+  beneficiaireId  String?
+  type            String   // 'envoi' | 'reception'
+  status          String   @default("pending") // 'pending' | 'completed' | 'cancelled'
+  amountSent      Float
+  amountReceived  Float
+  currencyFrom    String
+  currencyTo      String
+  exchangeRate    Float
+  fees            Float
+  motif           String?
+  message         String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  sender       User          @relation("SenderTransactions", fields: [senderId], references: [id])
+  receiver     User?         @relation("ReceiverTransactions", fields: [receiverId], references: [id])
+  beneficiaire Beneficiaire? @relation(fields: [beneficiaireId], references: [id])
+}
+
+model ExchangeRate {
+  id        String   @id @default(cuid())
+  fromCurrency String
+  toCurrency   String
+  rate         Float
+  change       Float  @default(0)
+  trend        String @default("stable")
+  updatedAt    DateTime @updatedAt
+
+  @@unique([fromCurrency, toCurrency])
+}
